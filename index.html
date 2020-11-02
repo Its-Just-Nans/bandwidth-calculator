@@ -1,0 +1,123 @@
+<div>
+	<h3>Bandwidth Calculator</h3>
+	<p>Enter two values, push "Calculate" on the missing third value!</p>
+</div>
+<style>
+#bandwidthCalc{
+	border: 1px solid black;
+}
+
+</style>
+<script>
+function calc(value){
+	if(document.getElementById('dataUnit').value === "-" || document.getElementById('speedUnit').value === "-"){
+		alert('Error');
+	}else{
+		if(value == 1){
+			document.getElementById('dataNum').value = parseFloat(document.getElementById('timeNum').value) * parseFloat(document.getElementById('timeUnit').value) * parseFloat(document.getElementById('speedNum').value) * parseFloat(document.getElementById('speedUnit').value);
+			document.getElementById('dataNum').value = document.getElementById('dataNum').value / document.getElementById('dataUnit').value
+		}else if(value == 2){
+			document.getElementById('timeNum').value = parseFloat(document.getElementById('dataNum').value) * parseFloat(document.getElementById('dataUnit').value) / ( parseFloat(document.getElementById('speedNum').value) * parseFloat(document.getElementById('speedUnit').value) );
+			document.getElementById('timeNum').value = document.getElementById('timeNum').value / document.getElementById('timeUnit').value
+		}else if(value == 3){
+			document.getElementById('speedNum').value = parseFloat(document.getElementById('dataNum').value) * parseFloat(document.getElementById('dataUnit').value) /( parseFloat(document.getElementById('timeNum').value) * parseFloat(document.getElementById('timeUnit').value) );
+			document.getElementById('speedNum').value = document.getElementById('speedNum').value / document.getElementById('speedUnit').value
+		}
+	}
+}
+//Code by n4n5
+</script>
+<table id="bandwidthCalc">
+	<tbody>
+		<tr>
+			<td>
+				DataSize
+			</td>
+			<td>
+				<input id="dataNum" type="number">
+			</td>
+			<td>
+				<select id="dataUnit">
+					<option value="1">bits - b</option>
+					<option value="1000">kilobits - Kb</option>
+					<option value="1000000">megabits - Mb</option>
+					<option value="1000000000">gigabits - Gb</option>
+					<option value="1000000000000">terabits - Tb</option>
+					<option value="-">--------------</option>
+					<option value="8" selected>bytes - B</option>
+					<option value="8000">kilobytes - KB</option>
+					<option value="8000000">megabytes - MB</option>
+					<option value="8000000000">gigabytes - GB</option>
+					<option value="8000000000000">terabytes - TB</option>
+					<option value="-">--------------</option>
+					<option value="1024">kibibytes - KiB</option>
+					<option value="1048576">mebibytes - MiB</option>
+					<option value="1073741824">gibibytes - GiB</option>
+					<option value="1.0995116e+12">tebibytes - TiB</option>
+				</select>
+			</td>
+			<td>
+				<button onclick="calc(1)">Calculate</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Time
+			</td>
+			<td>
+				<input id="timeNum" type="number">
+			</td>
+			<td>
+				<select id="timeUnit">
+					<option value="1e-9">nanoseconds</option>
+					<option value="1e-6">milliseconds</option>
+					<option value="0.001">milliseconds</option>
+					<option value="1" selected>seconds</option>
+					<option value="60">minutes</option>
+					<option value="3600">hours</option>
+					<option value="86400">days</option>
+					<option value="604800">weeks</option>
+					<option value="31536000">365 day years</option>
+				</select>
+			</td>
+			<td>
+				<button onclick="calc(2)">Calculate</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Speed
+			</td>
+			<td>
+				<input id="speedNum" type="number">
+			</td>
+			<td>
+				<select id="speedUnit">
+					<option value="1" selected>bits (b) per second</option>
+					<option value="1000">kilobits (Kb) per second</option>
+					<option value="1000000">megabits (Mb) per second</option>
+					<option value="1000000000">gigabits (Gb) per second</option>
+					<option value="1000000000000">terabits (Tb) per second</option>
+					<option value="-">--------------</option>
+					<option value="8">bytes (B) per second</option>
+					<option value="8000">kilobytes (KB) per second</option>
+					<option value="8000000">megabytes (MB) per second</option>
+					<option value="8000000000">gigabytes (GB) per second</option>
+					<option value="8000000000000">terabytes (TB) per second</option>
+					<option value="-">--------------</option>
+					<option value="1024">kibibytes (KiB) per second</option>
+					<option value="1048576">mebibytes (MiB) per second</option>
+					<option value="1073741824">gibibytes (GiB) per second</option>
+					<option value="1.0995116e+12">tebibytes (TiB) per second</option>
+					<option value="-">--------------</option>
+					<option value="10000000">10Mbps ethernet (don't work)</option>
+					<option value="100000000">100Mbps ethernet (don't work)</option>
+					<option value="1000000000">1Gbps (gigabit) ethernet (don't work)</option>
+				</select>
+			</td>
+			<td>
+				<button onclick="calc(3)">Calculate</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
