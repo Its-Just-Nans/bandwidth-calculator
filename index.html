@@ -6,22 +6,69 @@
 #bandwidthCalc{
 	border: 1px solid black;
 }
-
+.borders{
+	border-right: 1px solid black;
+	border-left: 1px solid black;
+}
+.borderUp{
+	border-top: 1px solid black;
+}
 </style>
 <script>
+function putNothing(){
+	document.getElementById('moreData').innerHTML = '';
+	document.getElementById('moreTime').innerHTML = '';
+	document.getElementById('moreSpeed').innerHTML = '';
+}
 function calc(value){
 	if(document.getElementById('dataUnit').value === "-" || document.getElementById('speedUnit').value === "-"){
 		alert('Error');
 	}else{
 		if(value == 1){
-			document.getElementById('dataNum').value = parseFloat(document.getElementById('timeNum').value) * parseFloat(document.getElementById('timeUnit').value) * parseFloat(document.getElementById('speedNum').value) * parseFloat(document.getElementById('speedUnit').value);
-			document.getElementById('dataNum').value = document.getElementById('dataNum').value / document.getElementById('dataUnit').value
+			if(document.getElementById('timeNum').value && document.getElementById('speedNum').value){
+				let data = document.getElementById('dataNum').value;
+				data = parseFloat(document.getElementById('timeNum').value) * parseFloat(document.getElementById('timeUnit').value) * parseFloat(document.getElementById('speedNum').value) * parseFloat(document.getElementById('speedUnit').value);
+				putNothing()
+				for(let optionElement of document.getElementById('dataUnit')){
+					if(optionElement.value != '-'){
+						document.getElementById('moreData').innerHTML += '<strong>' + (data / optionElement.value) + '</strong> ' + optionElement.innerHTML;
+						document.getElementById('moreData').innerHTML += '<br>';
+					}
+				}
+				document.getElementById('dataNum').value = data / document.getElementById('dataUnit').value;
+			}else{
+				alert('Missing Number');
+			}
 		}else if(value == 2){
-			document.getElementById('timeNum').value = parseFloat(document.getElementById('dataNum').value) * parseFloat(document.getElementById('dataUnit').value) / ( parseFloat(document.getElementById('speedNum').value) * parseFloat(document.getElementById('speedUnit').value) );
-			document.getElementById('timeNum').value = document.getElementById('timeNum').value / document.getElementById('timeUnit').value
+			if(document.getElementById('dataNum').value && document.getElementById('speedNum').value){
+				let data = document.getElementById('timeNum').value;
+				data = parseFloat(document.getElementById('dataNum').value) * parseFloat(document.getElementById('dataUnit').value) / ( parseFloat(document.getElementById('speedNum').value) * parseFloat(document.getElementById('speedUnit').value) );
+				putNothing();
+				for(let optionElement of document.getElementById('timeUnit')){
+					if(optionElement.value != '-'){
+						document.getElementById('moreTime').innerHTML += '<strong>' + (data / optionElement.value) + '</strong> ' + optionElement.innerHTML;
+						document.getElementById('moreTime').innerHTML += '<br>';
+					}
+				}
+				document.getElementById('timeNum').value = data / document.getElementById('timeUnit').value;
+			}else{
+				alert('Missing Number');
+			}
 		}else if(value == 3){
-			document.getElementById('speedNum').value = parseFloat(document.getElementById('dataNum').value) * parseFloat(document.getElementById('dataUnit').value) /( parseFloat(document.getElementById('timeNum').value) * parseFloat(document.getElementById('timeUnit').value) );
-			document.getElementById('speedNum').value = document.getElementById('speedNum').value / document.getElementById('speedUnit').value
+			if(document.getElementById('timeNum').value && document.getElementById('dataNum').value){
+				let data = document.getElementById('speedNum').value;
+				data = parseFloat(document.getElementById('dataNum').value) * parseFloat(document.getElementById('dataUnit').value) /( parseFloat(document.getElementById('timeNum').value) * parseFloat(document.getElementById('timeUnit').value) );
+				putNothing()
+				for(let optionElement of document.getElementById('speedUnit')){
+					if(optionElement.value != '-'){
+						document.getElementById('moreSpeed').innerHTML += '<strong>' + (data / optionElement.value) + '</strong> ' + optionElement.innerHTML;
+						document.getElementById('moreSpeed').innerHTML += '<br>';
+					}
+				}
+				document.getElementById('speedNum').value = data / document.getElementById('speedUnit').value;
+			}else{
+				alert('Missing Number');
+			}
 		}
 	}
 }
@@ -31,20 +78,49 @@ function calc(value){
 	<tbody>
 		<tr>
 			<td>
+				<button onclick="calc(1)">Calculate</button>
+			</td>
+			<td class="borders">
+				<button onclick="calc(2)">Calculate</button>
+			</td>
+			<td>
+				<button onclick="calc(3)">Calculate</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
 				DataSize
 			</td>
-			<td>
-				<input id="dataNum" type="number">
+			<td class="borders">
+				Time
 			</td>
 			<td>
+				Speed
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input id="dataNum" type="number">
+				
+			</td>
+			<td class="borders">
+				<input id="timeNum" type="number">
+			</td>
+			<td>
+				<input id="speedNum" type="number">
+				
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<select id="dataUnit">
-					<option value="1">bits - b</option>
+					<option value="1" selected>bits - b</option>
 					<option value="1000">kilobits - Kb</option>
 					<option value="1000000">megabits - Mb</option>
 					<option value="1000000000">gigabits - Gb</option>
 					<option value="1000000000000">terabits - Tb</option>
 					<option value="-">--------------</option>
-					<option value="8" selected>bytes - B</option>
+					<option value="8">bytes - B</option>
 					<option value="8000">kilobytes - KB</option>
 					<option value="8000000">megabytes - MB</option>
 					<option value="8000000000">gigabytes - GB</option>
@@ -56,18 +132,7 @@ function calc(value){
 					<option value="1.0995116e+12">tebibytes - TiB</option>
 				</select>
 			</td>
-			<td>
-				<button onclick="calc(1)">Calculate</button>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Time
-			</td>
-			<td>
-				<input id="timeNum" type="number">
-			</td>
-			<td>
+			<td class="borders">
 				<select id="timeUnit">
 					<option value="1e-9">nanoseconds</option>
 					<option value="1e-6">milliseconds</option>
@@ -78,18 +143,7 @@ function calc(value){
 					<option value="86400">days</option>
 					<option value="604800">weeks</option>
 					<option value="31536000">365 day years</option>
-				</select>
-			</td>
-			<td>
-				<button onclick="calc(2)">Calculate</button>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Speed
-			</td>
-			<td>
-				<input id="speedNum" type="number">
+				</select>				
 			</td>
 			<td>
 				<select id="speedUnit">
@@ -115,8 +169,13 @@ function calc(value){
 					<option value="1000000000">1Gbps (gigabit) ethernet (don't work)</option>
 				</select>
 			</td>
-			<td>
-				<button onclick="calc(3)">Calculate</button>
+		</tr>
+		<tr>
+			<td class="borderUp" id="moreData">
+			</td>
+			<td class="borders borderUp" id="moreTime">
+			</td>
+			<td class="borderUp" id="moreSpeed">
 			</td>
 		</tr>
 	</tbody>
