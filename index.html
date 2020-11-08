@@ -2,6 +2,8 @@
 	<h3>Bandwidth Calculator</h3>
 	<p>Enter two values, push "Calculate" on the missing third value!</p>
 </div>
+	<input type="checkbox" id="round">
+	<label for="round">rounded result</label>
 <style>
 #bandwidthCalc{
 	border: 1px solid black;
@@ -24,6 +26,7 @@ function calc(value){
 	if(document.getElementById('dataUnit').value === "-" || document.getElementById('speedUnit').value === "-"){
 		alert('Error');
 	}else{
+		var round = document.getElementById('round').checked;
 		if(value == 1){
 			if(document.getElementById('timeNum').value && document.getElementById('speedNum').value){
 				let data = document.getElementById('dataNum').value;
@@ -31,11 +34,13 @@ function calc(value){
 				putNothing()
 				for(let optionElement of document.getElementById('dataUnit')){
 					if(optionElement.value != '-'){
-						document.getElementById('moreData').innerHTML += '<strong>' + (data / optionElement.value) + '</strong> ' + optionElement.innerHTML;
+						let value = data / optionElement.value;
+						value = round ? Math.round(value) : value;
+						document.getElementById('moreData').innerHTML += '<strong>' + value + '</strong> ' + optionElement.innerHTML;
 						document.getElementById('moreData').innerHTML += '<br>';
 					}
 				}
-				document.getElementById('dataNum').value = data / document.getElementById('dataUnit').value;
+				document.getElementById('dataNum').value = round ? Math.round(data / document.getElementById('dataUnit').value) : (data / document.getElementById('dataUnit').value);
 			}else{
 				alert('Missing Number');
 			}
@@ -46,11 +51,13 @@ function calc(value){
 				putNothing();
 				for(let optionElement of document.getElementById('timeUnit')){
 					if(optionElement.value != '-'){
-						document.getElementById('moreTime').innerHTML += '<strong>' + (data / optionElement.value) + '</strong> ' + optionElement.innerHTML;
+						let value = data / optionElement.value;
+						value = round ? Math.round(value) : value;
+						document.getElementById('moreTime').innerHTML += '<strong>' + value + '</strong> ' + optionElement.innerHTML;
 						document.getElementById('moreTime').innerHTML += '<br>';
 					}
 				}
-				document.getElementById('timeNum').value = data / document.getElementById('timeUnit').value;
+				document.getElementById('timeNum').value = round ? Math.round(data / document.getElementById('timeUnit').value) : (data / document.getElementById('timeUnit').value);
 			}else{
 				alert('Missing Number');
 			}
@@ -61,11 +68,13 @@ function calc(value){
 				putNothing()
 				for(let optionElement of document.getElementById('speedUnit')){
 					if(optionElement.value != '-'){
-						document.getElementById('moreSpeed').innerHTML += '<strong>' + (data / optionElement.value) + '</strong> ' + optionElement.innerHTML;
+						let value = data / optionElement.value;
+						value = round ? Math.round(value) : value;
+						document.getElementById('moreSpeed').innerHTML += '<strong>' + value + '</strong> ' + optionElement.innerHTML;
 						document.getElementById('moreSpeed').innerHTML += '<br>';
 					}
 				}
-				document.getElementById('speedNum').value = data / document.getElementById('speedUnit').value;
+				document.getElementById('speedNum').value = round ? Math.round(data / document.getElementById('speedUnit').value) : (data / document.getElementById('speedUnit').value);
 			}else{
 				alert('Missing Number');
 			}
